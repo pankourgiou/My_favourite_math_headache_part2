@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATHEMATICAL HEADACHE — VOL. II</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inconsolata:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:      #08090d;
+  --paper:    #0d0f15;
+  --card:     #111318;
+  --lift:     #161921;
+  --rule:     rgba(255,255,255,0.06);
+  --rule2:    rgba(255,255,255,0.03);
+  --lime:     #b5ff4e;
+  --sky:      #4ef0ff;
+  --rose:     #ff4e8a;
+  --gold:     #ffc94e;
+  --violet:   #b04eff;
+  --coral:    #ff7c4e;
+  --mint:     #4effc8;
+  --chalk:    #e8e4d8;
+  --chalk2:   #9a97908;
+  --muted:    #555870;
+  --serif:    'Cormorant Garamond', Georgia, serif;
+  --sans:     'Syne', sans-serif;
+  --mono:     'Inconsolata', monospace;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--chalk);
+  font-family: var(--serif);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* scanlines */
+body::before {
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255,255,255,0.008) 2px,
+    rgba(255,255,255,0.008) 4px
+  );
+}
+
+/* ambient glow orbs */
+body::after {
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 600px 400px at 15% 20%, rgba(181,255,78,0.025) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 350px at 85% 70%, rgba(78,240,255,0.025) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 50% 50%, rgba(176,78,255,0.015) 0%, transparent 60%);
+}
+
+/* ── HEADER ── */
+header {
+  position: relative; z-index:10;
+  padding: 56px 32px 40px;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.h-left { display:flex; flex-direction:column; gap:10px; }
+
+.vol-tag {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 6px;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.vol-tag::before {
+  content:'';
+  display:block; width:30px; height:1px;
+  background: var(--lime);
+}
+
+.site-title {
+  font-family: var(--sans);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 0.95;
+  color: var(--chalk);
+  animation: titleIn 0.9s cubic-bezier(0.16,1,0.3,1) both;
+}
+.site-title em {
+  font-style: normal;
+  color: var(--lime);
+}
+@keyframes titleIn {
+  from { opacity:0; transform:translateX(-30px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+.h-right {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-align: right;
+  line-height: 2;
+  text-transform: uppercase;
+  animation: fadeIn 1s 0.3s ease both;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.caution {
+  display: inline-block;
+  background: var(--rose);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 3px;
+  font-weight: 700;
+  padding: 4px 14px;
+  text-transform: uppercase;
+  margin-top: 8px;
+  animation: fadeIn 1s 0.6s ease both;
+}
+
+/* ── GRID ── */
+.grid {
+  position: relative; z-index:5;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1px;
+  background: var(--rule2);
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--card);
+  padding: 30px 28px 26px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s;
+  animation: cardIn 0.5s ease both;
+}
+.card:hover { background: var(--lift); }
+@keyframes cardIn {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.card:nth-child(1){animation-delay:0.04s}
+.card:nth-child(2){animation-delay:0.08s}
+.card:nth-child(3){animation-delay:0.12s}
+.card:nth-child(4){animation-delay:0.16s}
+.card:nth-child(5){animation-delay:0.20s}
+.card:nth-child(6){animation-delay:0.24s}
+.card:nth-child(7){animation-delay:0.28s}
+.card:nth-child(8){animation-delay:0.32s}
+.card:nth-child(9){animation-delay:0.36s}
+.card:nth-child(10){animation-delay:0.40s}
+
+/* accent dot top-left */
+.card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:3px; height:100%;
+}
+.a-lime::before   { background: var(--lime); }
+.a-sky::before    { background: var(--sky); }
+.a-rose::before   { background: var(--rose); }
+.a-gold::before   { background: var(--gold); }
+.a-violet::before { background: var(--violet); }
+.a-coral::before  { background: var(--coral); }
+.a-mint::before   { background: var(--mint); }
+
+/* card index */
+.c-idx {
+  position:absolute; top:26px; right:26px;
+  font-family: var(--sans);
+  font-size: 4rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.03);
+  line-height:1;
+  user-select:none; pointer-events:none;
+  letter-spacing:-4px;
+}
+
+/* card header */
+.c-tag {
+  font-family: var(--mono);
+  font-size: 0.54rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+.c-tag::after { content:''; flex:1; height:1px; background:var(--rule); }
+
+.c-title {
+  font-family: var(--sans);
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #fff;
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.c-desc {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.snark {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 0.65rem;
+  display: block;
+  margin-top: 4px;
+}
+
+/* EQUATION BOX */
+.eq {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.85;
+  padding: 11px 14px;
+  margin-bottom: 16px;
+  border-radius: 2px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  position: relative;
+}
+.eq-lime   { background:rgba(181,255,78,0.06);  color:var(--lime);   border-left:2px solid var(--lime); }
+.eq-sky    { background:rgba(78,240,255,0.06);  color:var(--sky);    border-left:2px solid var(--sky); }
+.eq-rose   { background:rgba(255,78,138,0.06);  color:var(--rose);   border-left:2px solid var(--rose); }
+.eq-gold   { background:rgba(255,201,78,0.06);  color:var(--gold);   border-left:2px solid var(--gold); }
+.eq-violet { background:rgba(176,78,255,0.06);  color:var(--violet); border-left:2px solid var(--violet); }
+.eq-coral  { background:rgba(255,124,78,0.06);  color:var(--coral);  border-left:2px solid var(--coral); }
+.eq-mint   { background:rgba(78,255,200,0.06);  color:var(--mint);   border-left:2px solid var(--mint); }
+
+/* inputs */
+.irow { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:14px; }
+.field { display:flex; flex-direction:column; gap:4px; }
+.field label {
+  font-family:var(--mono); font-size:0.54rem;
+  letter-spacing:2px; text-transform:uppercase; color:var(--muted);
+}
+input[type=number], input[type=text], select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 2px;
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  padding: 7px 10px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  -moz-appearance: textfield;
+}
+input::-webkit-inner-spin-button { display:none; }
+input:focus, select:focus {
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.06);
+}
+select {
+  cursor:pointer; -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23555870'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 8px center; padding-right:22px;
+}
+input[type=range] {
+  -webkit-appearance:none; width:100%; height:2px;
+  background:rgba(255,255,255,0.1); border-radius:1px; outline:none; border:none; padding:0;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:14px; height:14px;
+  border-radius:50%; background:#fff; cursor:pointer;
+  transition:transform 0.1s, box-shadow 0.1s;
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  transform:scale(1.4);
+  box-shadow:0 0 8px rgba(255,255,255,0.5);
+}
+.slrow { display:flex; flex-direction:column; gap:5px; }
+.slhead { display:flex; justify-content:space-between; align-items:center; }
+.slname { font-family:var(--mono); font-size:0.52rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
+.slval  { font-family:var(--mono); font-size:0.65rem; }
+
+/* buttons */
+.btn {
+  font-family:var(--sans); font-size:0.72rem; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
+  padding:8px 20px; border-radius:2px; border:none;
+  cursor:pointer; transition:all 0.15s;
+  position:relative; overflow:hidden;
+}
+.btn::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.15); opacity:0; transition:opacity 0.15s; }
+.btn:hover::after { opacity:1; }
+.btn:hover { transform:translateY(-2px); }
+.btn:active { transform:scale(0.97); }
+.btn-lime   { background:var(--lime);   color:#0a0a0a; }
+.btn-sky    { background:var(--sky);    color:#0a0a0a; }
+.btn-rose   { background:var(--rose);   color:#fff; }
+.btn-gold   { background:var(--gold);   color:#0a0a0a; }
+.btn-violet { background:var(--violet); color:#fff; }
+.btn-coral  { background:var(--coral);  color:#fff; }
+.btn-mint   { background:var(--mint);   color:#0a0a0a; }
+
+/* result box */
+.result {
+  font-family:var(--mono); font-size:0.76rem;
+  background:rgba(0,0,0,0.4);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:2px;
+  padding:13px 14px;
+  min-height:54px;
+  line-height:2;
+  color: rgba(232,228,216,0.7);
+  transition:all 0.2s;
+  position:relative; overflow:hidden;
+}
+.result::before {
+  content:''; position:absolute;
+  left:0;top:0;bottom:0;width:2px;
+  background:rgba(255,255,255,0.08);
+}
+.result.pop { animation: pop 0.3s cubic-bezier(0.175,0.885,0.32,1.275); }
+@keyframes pop { 0%{transform:scale(0.98)} 60%{transform:scale(1.01)} 100%{transform:scale(1)} }
+
+.r-big  { display:block; font-size:1.3rem; font-weight:700; color:#fff; margin-bottom:3px; letter-spacing:-0.5px; }
+.r-eq   { display:block; font-size:0.7rem; margin-bottom:2px; }
+.r-step { display:block; font-size:0.67rem; color:var(--muted); }
+.r-hi   { color:var(--lime); }
+.r-sky  { color:var(--sky); }
+.r-rose { color:var(--rose); }
+.r-gold { color:var(--gold); }
+.r-warn { color:var(--rose); font-weight:700; }
+.r-good { color:var(--mint); }
+.r-note { display:block; font-style:italic; font-size:0.63rem; color:var(--muted); margin-top:5px; font-family:var(--serif); }
+
+/* headache meter */
+.hm { margin-top:12px; }
+.hm-track { height:4px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; }
+.hm-fill  { height:100%; border-radius:2px; transition:width 0.9s cubic-bezier(0.34,1.56,0.64,1); }
+.hm-label { display:flex; justify-content:space-between; margin-top:4px; font-family:var(--mono); font-size:0.5rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
+
+/* canvas */
+canvas { border-radius:2px; display:block; background:rgba(0,0,0,0.4); }
+
+/* footer */
+footer {
+  position:relative; z-index:10;
+  text-align:center; padding:36px;
+  font-family:var(--mono); font-size:0.55rem;
+  letter-spacing:3px; color:var(--muted);
+  text-transform:uppercase;
+  border-top:1px solid var(--rule);
+  max-width:1600px; margin:0 auto;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <div class="vol-tag">Volume II · Ten New Equations</div>
+    <div class="site-title">Mathematical<br><em>Headache</em><br>Generator</div>
+  </div>
+  <div class="h-right">
+    Chaos · Dynamical Systems<br>
+    Wave Physics · Acoustics<br>
+    Statistical Thermodynamics<br>
+    Geometric Optics<br>
+    Electrostatics<br>
+    Combinatorics<br>
+    General Relativity<br>
+    Probability Theory<br>
+    Complex Analysis<br>
+    Spectroscopy
+  </div>
+</header>
+
+<div class="grid">
+
+<!-- ① LOGISTIC MAP / CHAOS -->
+<div class="card a-lime">
+  <div class="c-idx">01</div>
+  <div class="c-tag" style="color:var(--lime)">Dynamical Systems</div>
+  <div class="c-title">The Logistic Map & Chaos</div>
+  <div class="c-desc">
+    A deceptively simple population model that invents chaos. Increase r past ~3.57 and the future becomes genuinely unpredictable — not because of missing data, but because the universe is trolling you.
+    <span class="snark" style="color:var(--lime)">// r=4 is pure chaos. r=3 is the beginning of your suffering.</span>
+  </div>
+  <div class="eq eq-lime">xₙ₊₁ = r · xₙ · (1 − xₙ)
+
+r = growth rate  [0, 4]
+x = population   [0, 1]
+Chaos onset: r ≈ 3.5699...</div>
+  <div class="irow">
+    <div class="field" style="flex:1">
+      <div class="slrow">
+        <div class="slhead"><span class="slname">r (growth rate)</span><span class="slval" id="log-r-v" style="color:var(--lime)">3.7</span></div>
+        <input type="range" id="log-r" min="0" max="4" step="0.001" value="3.7" oninput="document.getElementById('log-r-v').textContent=parseFloat(this.value).toFixed(3);doLogistic()">
+      </div>
+    </div>
+    <div class="field">
+      <label>x₀</label>
+      <input type="number" id="log-x0" value="0.5" min="0.001" max="0.999" step="0.001" style="width:75px">
+    </div>
+    <button class="btn btn-lime" onclick="doLogistic()">ITERATE</button>
+  </div>
+  <canvas id="log-canvas" height="80" style="width:100%;margin-bottom:10px"></canvas>
+  <div class="result" id="log-result"><span style="color:var(--muted)">Drag r past 3.57 and watch everything break.</span></div>
+</div>
+
+<!-- ② WAVE INTERFERENCE -->
+<div class="card a-sky">
+  <div class="c-idx">02</div>
+  <div class="c-tag" style="color:var(--sky)">Wave Physics</div>
+  <div class="c-title">Wave Superposition & Beats</div>
+  <div class="c-desc">
+    Add two waves of slightly different frequency. They reinforce, then cancel, then reinforce again — making a pulse. This is why two slightly out-of-tune guitars sound "warbly."
+    <span class="snark" style="color:var(--sky)">// f_beat = |f₁ − f₂|. Your ears compute this automatically. They are tiny physicists.</span>
+  </div>
+  <div class="eq eq-sky">y = A·sin(2πf₁t) + A·sin(2πf₂t)
+
+Beat frequency: f_b = |f₁ − f₂|
+Envelope: 2A·cos(π·f_b·t)</div>
+  <div class="irow">
+    <div class="field" style="flex:1">
+      <div class="slrow">
+        <div class="slhead"><span class="slname">f₁ (Hz)</span><span class="slval" id="wav-f1-v" style="color:var(--sky)">440</span></div>
+        <input type="range" id="wav-f1" min="220" max="880" step="1" value="440" oninput="document.getElementById('wav-f1-v').textContent=this.value;doWave()">
+      </div>
+    </div>
+    <div class="field" style="flex:1">
+      <div class="slrow">
+        <div class="slhead"><span class="slname">f₂ (Hz)</span><span class="slval" id="wav-f2-v" style="color:var(--sky)">444</span></div>
+        <input type="range" id="wav-f2" min="220" max="880" step="1" value="444" oninput="document.getElementById('wav-f2-v').textContent=this.value;doWave()">
+      </div>
+    </div>
+  </div>
+  <canvas id="wav-canvas" height="80" style="width:100%;margin-bottom:10px"></canvas>
+  <div class="result" id="wav-result"><span style="color:var(--muted)">Drag the frequencies close together for beat notes.</span></div>
+</div>
+
+<!-- ③ BOLTZMANN ENTROPY -->
+<div class="card a-rose">
+  <div class="c-idx">03</div>
+  <div class="c-tag" style="color:var(--rose)">Thermodynamics</div>
+  <div class="c-title">Boltzmann Entropy & Disorder</div>
+  <div class="c-desc">
+    Entropy S = k·ln(Ω). The universe prefers disorder because there are astronomically more disordered states than ordered ones. Your desk being messy is statistically inevitable.
+    <span class="snark" style="color:var(--rose)">// The universe isn't cruel. It's just outvoted by chaos.</span>
+  </div>
+  <div class="eq eq-rose">S = k_B · ln(Ω)
+
+k_B = 1.380649×10⁻²³ J/K
+Ω = number of microstates
+ΔS_universe ≥ 0 (always)</div>
+  <div class="irow">
+    <div class="field">
+      <label>Particles (N)</label>
+      <input type="number" id="bolt-n" value="50" min="1" max="200" style="width:80px">
+    </div>
+    <div class="field">
+      <label>States each (k)</label>
+      <input type="number" id="bolt-k" value="2" min="2" max="10" style="width:70px">
+    </div>
+    <button class="btn btn-rose" onclick="doBoltzmann()">DISORDER</button>
+  </div>
+  <div class="result" id="bolt-result"><span style="color:var(--muted)">How many ways can N particles arrange themselves?</span></div>
+</div>
+
+<!-- ④ SNELL'S LAW / REFRACTION -->
+<div class="card a-gold">
+  <div class="c-idx">04</div>
+  <div class="c-tag" style="color:var(--gold)">Optics</div>
+  <div class="c-title">Snell's Law & Total Internal Reflection</div>
+  <div class="c-desc">
+    Light bends when crossing materials. At a critical angle it stops crossing entirely and bounces back — total internal reflection. This is how fibre optic cables carry the internet.
+    <span class="snark" style="color:var(--gold)">// Without Snell's Law your glasses, cameras, and Netflix would not function. Thank Willebrord.</span>
+  </div>
+  <div class="eq eq-gold">n₁·sin(θ₁) = n₂·sin(θ₂)
+
+Critical angle: θ_c = arcsin(n₂/n₁)
+(only when n₁ > n₂)</div>
+  <div class="irow">
+    <div class="field">
+      <label>Material 1</label>
+      <select id="sn-m1" onchange="doSnell()" style="width:130px">
+        <option value="1.0">🌬 Air (1.000)</option>
+        <option value="1.33">💧 Water (1.330)</option>
+        <option value="1.5">🔍 Glass (1.500)</option>
+        <option value="2.42">💎 Diamond (2.417)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Material 2</label>
+      <select id="sn-m2" onchange="doSnell()" style="width:130px">
+        <option value="1.5" selected>🔍 Glass (1.500)</option>
+        <option value="1.0">🌬 Air (1.000)</option>
+        <option value="1.33">💧 Water (1.330)</option>
+        <option value="2.42">💎 Diamond (2.417)</option>
+      </select>
+    </div>
+  </div>
+  <div class="irow">
+    <div class="field" style="flex:1">
+      <div class="slrow">
+        <div class="slhead"><span class="slname">Angle of incidence θ₁</span><span class="slval" id="sn-θ-v" style="color:var(--gold)">30°</span></div>
+        <input type="range" id="sn-θ" min="0" max="89" step="0.5" value="30" oninput="document.getElementById('sn-θ-v').textContent=parseFloat(this.value).toFixed(1)+'°';doSnell()">
+      </div>
+    </div>
+  </div>
+  <canvas id="sn-canvas" height="100" style="width:100%;margin-bottom:10px"></canvas>
+  <div class="result" id="sn-result"><span style="color:var(--muted)">Adjust angle and materials to bend light.</span></div>
+</div>
+
+<!-- ⑤ COULOMB'S LAW -->
+<div class="card a-violet">
+  <div class="c-idx">05</div>
+  <div class="c-tag" style="color:var(--violet)">Electrostatics</div>
+  <div class="c-title">Coulomb's Law</div>
+  <div class="c-desc">
+    Two charges either attract or repel. The force drops with the square of the distance — double the separation, quarter the force. The same law governs gravity, light, and your hair on a dry day.
+    <span class="snark" style="color:var(--violet)">// One proton and one electron at 1 Å apart: 230 nN. Tiny but mighty. You are held together by this.</span>
+  </div>
+  <div class="eq eq-violet">F = k · q₁q₂ / r²
+
+k = 8.9875×10⁹ N·m²/C²
+Units: Coulombs, metres, Newtons</div>
+  <div class="irow">
+    <div class="field">
+      <label>q₁ (nC)</label>
+      <input type="number" id="coul-q1" value="1" step="0.1" style="width:75px">
+    </div>
+    <div class="field">
+      <label>q₂ (nC)</label>
+      <input type="number" id="coul-q2" value="-1" step="0.1" style="width:75px">
+    </div>
+    <div class="field">
+      <label>r (cm)</label>
+      <input type="number" id="coul-r" value="10" min="0.01" step="0.1" style="width:75px">
+    </div>
+    <button class="btn btn-violet" onclick="doCoulomb()">CHARGE!</button>
+  </div>
+  <div class="result" id="coul-result"><span style="color:var(--muted)">Opposite charges attract. Same charges repel. Obviously.</span></div>
+</div>
+
+<!-- ⑥ STIRLING'S APPROXIMATION -->
+<div class="card a-coral">
+  <div class="c-idx">06</div>
+  <div class="c-tag" style="color:var(--coral)">Number Theory</div>
+  <div class="c-title">Stirling's Approximation</div>
+  <div class="c-desc">
+    Computing 1000! is painful. Stirling says: don't. Use ln(n!) ≈ n·ln(n) − n instead. The approximation gets relatively better as n grows. At n=1000 it's off by 0.008%. Not bad for a lazy formula.
+    <span class="snark" style="color:var(--coral)">// The full version adds ½ln(2πn). Even lazier people use just n·ln(n)−n and pray.</span>
+  </div>
+  <div class="eq eq-coral">ln(n!) ≈ n·ln(n) − n + ½·ln(2πn)
+
+Stirling's formula: n! ≈ √(2πn)·(n/e)ⁿ
+Error → 0 as n → ∞</div>
+  <div class="irow">
+    <div class="field" style="flex:1">
+      <div class="slrow">
+        <div class="slhead"><span class="slname">n</span><span class="slval" id="stir-n-v" style="color:var(--coral)">20</span></div>
+        <input type="range" id="stir-n" min="2" max="170" step="1" value="20" oninput="document.getElementById('stir-n-v').textContent=this.value;doStirling()">
+      </div>
+    </div>
+    <button class="btn btn-coral" onclick="doStirling()">APPROXIMATE</button>
+  </div>
+  <div class="result" id="stir-result"><span style="color:var(--muted)">Slide n and compare exact vs approximate factorial.</span></div>
+</div>
+
+<!-- ⑦ GRAVITATIONAL WAVE STRAIN -->
+<div class="card a-mint">
+  <div class="c-idx">07</div>
+  <div class="c-tag" style="color:var(--mint)">General Relativity</div>
+  <div class="c-title">Gravitational Wave Strain</div>
+  <div class="c-desc">
+    When two black holes merge, they ripple spacetime itself. LIGO detected a strain of 10⁻²¹ — meaning a detector 4 km long changed length by 1/1000th the width of a proton. They built the most sensitive instrument in human history to see this.
+    <span class="snark" style="color:var(--mint)">// h = 10⁻²¹. This is not nothing. This is almost-nothing, which is different.</span>
+  </div>
+  <div class="eq eq-mint">h = ΔL / L  (dimensionless strain)
+
+h ≈ (4G/c⁴) · (d²I/dt²) / r
+I = quadrupole moment of source
+r = distance to source</div>
+  <div class="irow">
+    <div class="field">
+      <label>Source mass (M☉)</label>
+      <input type="number" id="gw-m" value="30" min="1" max="1000" style="width:90px">
+    </div>
+    <div class="field">
+      <label>Distance (Mpc)</label>
+      <input type="number" id="gw-d" value="410" min="1" style="width:90px">
+    </div>
+    <button class="btn btn-mint" onclick="doGWave()">DETECT</button>
+  </div>
+  <div class="result" id="gw-result"><span style="color:var(--muted)">Enter black hole mass and merger distance.</span></div>
+</div>
+
+<!-- ⑧ NORMAL DISTRIBUTION -->
+<div class="card a-sky">
+  <div class="c-idx">08</div>
+  <div class="c-tag" style="color:var(--sky)">Statistics & Probability</div>
+  <div class="c-title">The Gaussian Bell Curve</div>
+  <div class="c-desc">
+    The most important distribution in all of statistics. Heights, measurement errors, IQ scores, the sum of dice rolls — they all converge here. The Central Limit Theorem says: add enough random things together and you get this. Every time.
+    <span class="snark" style="color:var(--sky)">// "God made the integers, all else is the work of man" — except this one. This one man made too.</span>
+  </div>
+  <div class="eq eq-sky">f(x) = (1/σ√(2π)) · e^(−(x−μ)²/2σ²)
+
+68-95-99.7 rule:
+±1σ → 68.27%  ±2σ → 95.45%  ±3σ → 99.73%</div>
+  <div class="irow">
+    <div class="field">
+      <label>Mean μ</label>
+      <input type="number" id="norm-mu" value="0" step="0.5" style="width:75px">
+    </div>
+    <div class="field" style="flex:1">
+      <div class="slrow">
+        <div class="slhead"><span class="slname">Std dev σ</span><span class="slval" id="norm-σ-v" style="color:var(--sky)">1.0</span></div>
+        <input type="range" id="norm-σ" min="0.2" max="3" step="0.1" value="1" oninput="document.getElementById('norm-σ-v').textContent=parseFloat(this.value).toFixed(1);doNormal()">
+      </div>
+    </div>
+    <div class="field">
+      <label>Query x</label>
+      <input type="number" id="norm-x" value="1" step="0.1" style="width:75px">
+    </div>
+  </div>
+  <canvas id="norm-canvas" height="90" style="width:100%;margin-bottom:10px"></canvas>
+  <div class="result" id="norm-result"><span style="color:var(--muted)">Adjust σ and see the bell curve change.</span></div>
+</div>
+
+<!-- ⑨ MANDELBROT ITERATION COUNT -->
+<div class="card a-violet">
+  <div class="c-idx">09</div>
+  <div class="c-tag" style="color:var(--violet)">Complex Analysis</div>
+  <div class="c-title">Mandelbrot Set — The Maths Behind the Beauty</div>
+  <div class="c-desc">
+    A point c is in the Mandelbrot set if iterating zₙ₊₁ = zₙ² + c never escapes to infinity. The boundary between "escapes" and "doesn't escape" is infinitely complex. Nobody fully mapped it. Nobody ever will.
+    <span class="snark" style="color:var(--violet)">// The set has finite area (~1.506 sq units) but infinite perimeter. Your intuition is now broken.</span>
+  </div>
+  <div class="eq eq-violet">zₙ₊₁ = zₙ² + c,  z₀ = 0
+
+c = a + bi  (complex number)
+In set if |zₙ| ≤ 2 for all n
+Smooth colour: n + 1 − log₂(log₂|zₙ|)</div>
+  <div class="irow">
+    <div class="field">
+      <label>Re(c)</label>
+      <input type="number" id="mb-re" value="-0.7" step="0.01" style="width:90px">
+    </div>
+    <div class="field">
+      <label>Im(c)</label>
+      <input type="number" id="mb-im" value="0.27" step="0.01" style="width:90px">
+    </div>
+    <div class="field">
+      <label>Max iter</label>
+      <input type="number" id="mb-n" value="200" min="10" max="5000" style="width:80px">
+    </div>
+    <button class="btn btn-violet" onclick="doMandelbrot()">ITERATE</button>
+  </div>
+  <div class="result" id="mb-result"><span style="color:var(--muted)">Try c = −0.7 + 0.27i. Or c = −2 + 0i. Or c = 0.001 + 0.001i.</span></div>
+</div>
+
+<!-- ⑩ BEER-LAMBERT LAW -->
+<div class="card a-gold">
+  <div class="c-idx">10</div>
+  <div class="c-tag" style="color:var(--gold)">Chemistry / Spectroscopy</div>
+  <div class="c-title">Beer-Lambert Law</div>
+  <div class="c-desc">
+    Light passing through a solution loses intensity exponentially with concentration and path length. This is how chemists measure concentration — they shine light through it and see how much disappears.
+    <span class="snark" style="color:var(--gold)">// Named partly after August Beer. Yes, the law that measures beer concentration is named Beer. The universe has a sense of humour after all.</span>
+  </div>
+  <div class="eq eq-gold">A = ε · c · l = −log₁₀(I/I₀)
+
+T = I/I₀ = 10^(−A)  (transmittance)
+ε = molar absorptivity (L·mol⁻¹·cm⁻¹)
+c = concentration (mol/L), l = path (cm)</div>
+  <div class="irow">
+    <div class="field">
+      <label>ε (L·mol⁻¹·cm⁻¹)</label>
+      <input type="number" id="bl-eps" value="1000" min="1" style="width:100px">
+    </div>
+    <div class="field">
+      <label>c (mmol/L)</label>
+      <input type="number" id="bl-c" value="0.5" min="0.001" step="0.01" style="width:90px">
+    </div>
+    <div class="field">
+      <label>l (cm)</label>
+      <input type="number" id="bl-l" value="1" min="0.1" step="0.1" style="width:70px">
+    </div>
+    <button class="btn btn-gold" onclick="doBeerLambert()">ABSORB</button>
+  </div>
+  <div class="result" id="bl-result"><span style="color:var(--muted)">How much light survives the solution?</span></div>
+</div>
+
+</div>
+
+<footer>Mathematical Headache Generator — Volume II · New equations · Same suffering · All correct</footer>
+
+<script>
+const PI = Math.PI;
+const KB = 1.380649e-23;
+const G  = 6.674e-11;
+const C  = 299792458;
+const K  = 8.9875e9;
+
+function pop(id, html) {
+  const el = document.getElementById(id);
+  el.innerHTML = html;
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+}
+function sci(n, dp=4) {
+  if (!isFinite(n)) return '<span class="r-warn">∞</span>';
+  if (n === 0) return '0';
+  const e = Math.floor(Math.log10(Math.abs(n)));
+  return (Math.abs(e) < 4) ? n.toPrecision(dp) : n.toExponential(dp-1);
+}
+function hm(pct, label) {
+  const c = pct<30?'var(--mint)':pct<60?'var(--gold)':pct<85?'var(--coral)':'var(--rose)';
+  return `<div class="hm"><div class="hm-track"><div class="hm-fill" style="width:${pct}%;background:${c}"></div></div>
+  <div class="hm-label"><span>Headache Level</span><span style="color:${c}">${label}</span></div></div>`;
+}
+function dpr() { return Math.min(window.devicePixelRatio||1, 2); }
+function setupCanvas(id) {
+  const c = document.getElementById(id);
+  const d = dpr();
+  c.width = c.offsetWidth * d;
+  const ctx = c.getContext('2d');
+  ctx.scale(d, d);
+  return { c, ctx, W: c.offsetWidth, H: c.height/d };
+}
+
+// ① LOGISTIC MAP
+function doLogistic() {
+  const r  = parseFloat(document.getElementById('log-r').value);
+  const x0 = parseFloat(document.getElementById('log-x0').value) || 0.5;
+  const N  = 200;
+  const seq = [x0];
+  for (let i=1; i<N; i++) seq.push(r * seq[i-1] * (1-seq[i-1]));
+
+  const {ctx, W, H} = setupCanvas('log-canvas');
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle = 'rgba(181,255,78,0.8)'; ctx.lineWidth = 1;
+  ctx.beginPath();
+  seq.forEach((v,i)=>{
+    const x=i/N*W, y=H-v*H;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  // last 20 values (attractor)
+  const last = seq.slice(-50);
+  const unique = [...new Set(last.map(v=>Math.round(v*1000)/1000))];
+  const range = Math.max(...last) - Math.min(...last);
+  const period = r<3?1:r<3.449?2:r<3.544?4:r<3.5688?8:'chaos';
+
+  pop('log-result', `
+    <span class="r-big">x₁₀₀ = ${seq[99].toFixed(8)}</span>
+    <span class="r-eq">r = ${r} → Regime: <span class="${typeof period==='number'?'r-good':'r-warn'}">${typeof period==='number'?'Period-'+period+' cycle':'CHAOTIC'}</span></span>
+    <span class="r-step">Attractor values: ${unique.slice(0,6).join(' · ')}${unique.length>6?'…':''}</span>
+    <span class="r-step">Range of last 50: ${range.toFixed(6)} ${range>0.5?'(huge — chaotic)':'(settled)'}</span>
+    <span class="r-note">At r≈3.5699, period-doubling cascades to infinite bifurcations. The Feigenbaum constant δ≈4.669 describes the rate.</span>
+    ${hm(r>3.8?95:r>3.57?75:r>3?45:15, r>3.8?'Full Chaos 🔥':r>3.57?'Deterministic Chaos':r>3?'Bifurcation':'Stable')}
+  `);
+}
+
+// ② WAVE INTERFERENCE
+function doWave() {
+  const f1 = parseFloat(document.getElementById('wav-f1').value);
+  const f2 = parseFloat(document.getElementById('wav-f2').value);
+  const fb = Math.abs(f1-f2);
+  const {ctx, W, H} = setupCanvas('wav-canvas');
+  ctx.clearRect(0,0,W,H);
+  const mid = H/2;
+  const T = 1/Math.min(f1,f2)*3; // show 3 periods of lower freq
+  // wave 1
+  ctx.beginPath(); ctx.strokeStyle='rgba(78,240,255,0.3)'; ctx.lineWidth=1;
+  for(let px=0;px<W;px++){
+    const t=px/W*T; const y=mid-Math.sin(2*PI*f1*t)*mid*0.45;
+    px===0?ctx.moveTo(px,y):ctx.lineTo(px,y);
+  }
+  ctx.stroke();
+  // wave 2
+  ctx.beginPath(); ctx.strokeStyle='rgba(78,240,255,0.3)'; ctx.lineWidth=1;
+  for(let px=0;px<W;px++){
+    const t=px/W*T; const y=mid-Math.sin(2*PI*f2*t)*mid*0.45;
+    px===0?ctx.moveTo(px,y):ctx.lineTo(px,y);
+  }
+  ctx.stroke();
+  // superposition
+  ctx.beginPath(); ctx.strokeStyle='rgba(78,240,255,1)'; ctx.lineWidth=1.5;
+  for(let px=0;px<W;px++){
+    const t=px/W*T;
+    const y=mid-(Math.sin(2*PI*f1*t)+Math.sin(2*PI*f2*t))*mid*0.35;
+    px===0?ctx.moveTo(px,y):ctx.lineTo(px,y);
+  }
+  ctx.stroke();
+
+  const noteNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  const midiF = f => 12*Math.log2(f/440)+69;
+  const noteName = f => noteNames[Math.round(midiF(f))%12];
+
+  pop('wav-result', `
+    <span class="r-big">Beat frequency: ${fb.toFixed(1)} Hz</span>
+    <span class="r-eq">f₁ = ${f1} Hz (${noteName(f1)})  ·  f₂ = ${f2} Hz (${noteName(f2)})</span>
+    <span class="r-step">Beats per second: ${fb.toFixed(2)} — you hear a pulse ${fb.toFixed(2)} times per second</span>
+    <span class="r-step">Period of beat: ${fb>0?(1/fb*1000).toFixed(2):'∞'} ms</span>
+    <span class="r-step">Interval ratio: ${(Math.max(f1,f2)/Math.min(f1,f2)).toFixed(4)} ${Math.abs(Math.max(f1,f2)/Math.min(f1,f2)-2)<0.01?'(octave!)':''}</span>
+    ${hm(Math.min(95,fb*5+10), fb===0?'Perfect Unison':fb<5?'Almost In Tune':fb<20?'Beating Clearly':'Dissonant')}
+  `);
+}
+
+// ③ BOLTZMANN ENTROPY
+function doBoltzmann() {
+  const N = parseInt(document.getElementById('bolt-n').value)||50;
+  const k = parseInt(document.getElementById('bolt-k').value)||2;
+  // Ω = k^N
+  const lnOmega = N * Math.log(k);
+  const S = KB * lnOmega;
+  const lnOmega10 = lnOmega / Math.log(10);
+  const digits = Math.floor(lnOmega10);
+
+  // Compare to known entropies
+  const compare = S < 1e-20 ? 'less than one water molecule' :
+                  S < 1e-10 ? 'a nanoscale system' :
+                  S < 1e5   ? 'a biological cell' :
+                               'macroscopic system';
+
+  // Probability of most ordered state
+  const pOrdered = Math.exp(-lnOmega);
+  const pOrderedStr = pOrdered < 1e-300 ? '≈ 0 (literally impossible)' : pOrdered.toExponential(3);
+
+  pop('bolt-result', `
+    <span class="r-big">S = ${sci(S)} J/K</span>
+    <span class="r-eq">Ω = ${k}^${N} = 10^${lnOmega10.toFixed(2)} ≈ a ${digits}-digit number</span>
+    <span class="r-step">ln(Ω) = ${lnOmega.toFixed(4)}</span>
+    <span class="r-step">Prob. of most ordered state: <span class="r-rose">${pOrderedStr}</span></span>
+    <span class="r-step">Scale: comparable to ${compare}</span>
+    <span class="r-note">The second law of thermodynamics isn't a law. It's a counting argument. Disorder wins because it has more ways to exist.</span>
+    ${hm(Math.min(97, 20 + digits*2), digits>20?'Cosmically Disordered':digits>5?'Statistically Inevitable':'Manageable')}
+  `);
+}
+
+// ④ SNELL'S LAW
+function doSnell() {
+  const n1  = parseFloat(document.getElementById('sn-m1').value);
+  const n2  = parseFloat(document.getElementById('sn-m2').value);
+  const th1 = parseFloat(document.getElementById('sn-θ').value) * PI/180;
+  const sinTh2 = n1*Math.sin(th1)/n2;
+  const tir = sinTh2 > 1;
+  const th2 = tir ? null : Math.asin(sinTh2);
+  const tir_angle = n1>n2 ? Math.asin(n2/n1)*180/PI : null;
+
+  // Draw
+  const {ctx, W, H} = setupCanvas('sn-canvas');
+  ctx.clearRect(0,0,W,H);
+  const mid = H/2, cx = W/2;
+
+  // interface
+  ctx.strokeStyle='rgba(255,255,255,0.1)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(W,mid); ctx.stroke();
+
+  // normal
+  ctx.strokeStyle='rgba(255,255,255,0.08)'; ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // material labels
+  ctx.fillStyle='rgba(255,255,255,0.2)'; ctx.font='10px Inconsolata'; ctx.textAlign='left';
+  ctx.fillText(`n₁=${n1}`, 8, mid-8);
+  ctx.fillText(`n₂=${n2}`, 8, mid+16);
+
+  // incident ray
+  const len = 60;
+  ctx.strokeStyle='rgba(255,201,78,0.9)'; ctx.lineWidth=2;
+  ctx.beginPath();
+  ctx.moveTo(cx - Math.sin(th1)*len, mid - Math.cos(th1)*len);
+  ctx.lineTo(cx, mid);
+  ctx.stroke();
+  // arrow head
+  ctx.fillStyle='rgba(255,201,78,0.9)';
+  ctx.beginPath(); ctx.arc(cx,mid,3,0,2*PI); ctx.fill();
+
+  if (!tir) {
+    // refracted ray
+    ctx.strokeStyle='rgba(78,240,255,0.9)'; ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(cx, mid);
+    ctx.lineTo(cx + Math.sin(th2)*len, mid + Math.cos(th2)*len);
+    ctx.stroke();
+    // partial reflection (faint)
+    ctx.strokeStyle='rgba(255,201,78,0.25)'; ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.moveTo(cx, mid);
+    ctx.lineTo(cx + Math.sin(th1)*40, mid - Math.cos(th1)*40);
+    ctx.stroke();
+  } else {
+    // total internal reflection
+    ctx.strokeStyle='rgba(255,78,138,0.9)'; ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(cx, mid);
+    ctx.lineTo(cx + Math.sin(th1)*len, mid - Math.cos(th1)*len);
+    ctx.stroke();
+  }
+
+  pop('sn-result', `
+    <span class="r-big">${tir ? 'TOTAL INTERNAL REFLECTION' : 'θ₂ = '+((th2||0)*180/PI).toFixed(2)+'°'}</span>
+    <span class="r-eq">${n1}·sin(${(th1*180/PI).toFixed(1)}°) = ${n2}·sin(θ₂) → sin(θ₂) = ${sinTh2.toFixed(4)}</span>
+    ${tir ? `<span class="r-step r-rose">sin(θ₂) = ${sinTh2.toFixed(4)} > 1: impossible. Light bounces back entirely.</span>` :
+            `<span class="r-step">Ray bends ${th2>th1?'away from':'toward'} normal (${th2>th1?'entering less dense':'entering denser'} medium)</span>`}
+    ${tir_angle?`<span class="r-step">Critical angle: <span class="r-gold">${tir_angle.toFixed(2)}°</span> — above this: total reflection</span>`:''}
+    <span class="r-note">Fibre optics exploit total internal reflection. Light zigzags down the cable, always hitting at > critical angle, never escaping.</span>
+    ${hm(tir?90:35, tir?'Mind Bending':'Geometrically Satisfying')}
+  `);
+}
+
+// ⑤ COULOMB
+function doCoulomb() {
+  const q1 = parseFloat(document.getElementById('coul-q1').value)*1e-9;
+  const q2 = parseFloat(document.getElementById('coul-q2').value)*1e-9;
+  const r  = parseFloat(document.getElementById('coul-r').value)*0.01;
+  if(r<=0){pop('coul-result','<span class="r-warn">r must be > 0</span>');return;}
+
+  const F = K * q1 * q2 / (r*r);
+  const attract = F < 0;
+  const E1 = K * Math.abs(q1) / (r*r); // field at q2 location
+  const U = K * q1 * q2 / r; // potential energy
+
+  pop('coul-result', `
+    <span class="r-big">${sci(Math.abs(F))} N  <span style="font-size:1rem">${attract?'← ATTRACT →':'← REPEL →'}</span></span>
+    <span class="r-eq">F = ${sci(K)}·(${sci(q1)})·(${sci(q2)}) / ${r}²</span>
+    <span class="r-step">Direction: <span class="${attract?'r-good':'r-rose'}">${attract?'Attractive (opposite charges)':'Repulsive (same sign charges)'}</span></span>
+    <span class="r-step">Electric field at q₂: ${sci(E1)} N/C</span>
+    <span class="r-step">Potential energy: ${sci(U)} J ${U<0?'(bound state)':'(unbound state)'}</span>
+    <span class="r-step">At half distance (${(r*50).toFixed(1)} cm): force would be ${sci(Math.abs(F*4))} N (4×)</span>
+    ${hm(Math.min(95, 20 + Math.log10(Math.abs(F)+1)*15), Math.abs(F)>1?'Physically Significant':'Microscopically Intense')}
+  `);
+}
+
+// ⑥ STIRLING
+function doStirling() {
+  const n = parseInt(document.getElementById('stir-n').value)||20;
+
+  // Exact factorial using BigInt where possible
+  let exactStr, exactLog;
+  if(n<=170) {
+    let f = 1;
+    for(let i=2;i<=n;i++) f*=i;
+    exactStr = f.toLocaleString();
+    exactLog = Math.log(f);
+  } else {
+    exactLog = 0;
+    for(let i=2;i<=n;i++) exactLog+=Math.log(i);
+    exactStr = `10^${(exactLog/Math.log(10)).toFixed(2)}`;
+  }
+
+  // Stirling
+  const stirLog = n*Math.log(n) - n + 0.5*Math.log(2*PI*n);
+  const stirVal = Math.exp(stirLog);
+  const errPct = n<=170 ? Math.abs(stirVal - Math.exp(exactLog))/Math.exp(exactLog)*100 : null;
+  const digits = Math.floor(exactLog/Math.log(10)) + 1;
+
+  pop('stir-result', `
+    <span class="r-big">${n}! ≈ ${stirVal < 1e15 ? stirVal.toLocaleString(undefined,{maximumSignificantDigits:6}) : '10^'+stirLog.toFixed(3)}</span>
+    <span class="r-eq">Exact: ${exactStr}</span>
+    <span class="r-step">ln(${n}!) exact: ${exactLog.toFixed(6)} · Stirling: ${stirLog.toFixed(6)}</span>
+    ${errPct!==null?`<span class="r-step">Relative error: <span class="r-good">${errPct.toFixed(4)}%</span> — ${errPct<0.1?'remarkably accurate':'decent approximation'}</span>`:''}
+    <span class="r-step">${n}! has ${digits} digits</span>
+    <span class="r-note">The error is O(1/n) — it shrinks as n grows. At n=1000 the error is ~0.008%. The formula gets lazier yet more accurate simultaneously.</span>
+    ${hm(Math.min(92, digits*3 + 10), digits>10?'Factorial Vertigo':digits>4?'Numerically Dizzy':'Approachable')}
+  `);
+}
+
+// ⑦ GRAVITATIONAL WAVES
+function doGWave() {
+  const M_solar = parseFloat(document.getElementById('gw-m').value)||30;
+  const dist_Mpc = parseFloat(document.getElementById('gw-d').value)||410;
+
+  const M = M_solar * 1.989e30;
+  const r = dist_Mpc * 3.086e22; // metres
+  const Rs = 2*G*M/(C*C); // Schwarzschild radius
+
+  // Strain estimate: h ~ 4G²M²/(c⁴·r·Rs/2)
+  // More accurate: h ≈ (4/5)(GM/c²)²(v/c)²/r → simplified
+  const h = (4*G*M*C/C) * (G*M/(C*C*r));
+  const ligo_arm = 4000; // metres
+  const delta_L = h * ligo_arm;
+  const proton_r = 8.41e-16;
+
+  pop('gw-result', `
+    <span class="r-big">h ≈ ${sci(h)}</span>
+    <span class="r-eq">ΔL / L at LIGO = h · 4km = ${sci(delta_L)} m</span>
+    <span class="r-step">= ${sci(delta_L/proton_r)} × proton radius</span>
+    <span class="r-step">Schwarzschild radius of source: ${(Rs/1000).toFixed(2)} km</span>
+    <span class="r-step">Distance: ${dist_Mpc} Mpc = ${sci(r)} m</span>
+    <span class="r-note">For comparison: GW150914 (first detection, 2015) had h ≈ 10⁻²¹ from 36+29 solar mass merger at 410 Mpc. LIGO's mirrors moved less than 1/1000 of a proton width.</span>
+    ${hm(92, 'Nobel Prize Territory')}
+  `);
+}
+
+// ⑧ NORMAL DISTRIBUTION
+function doNormal() {
+  const mu = parseFloat(document.getElementById('norm-mu').value)||0;
+  const sigma = parseFloat(document.getElementById('norm-σ').value)||1;
+  const x = parseFloat(document.getElementById('norm-x').value)||1;
+
+  const pdf = v => (1/(sigma*Math.sqrt(2*PI)))*Math.exp(-0.5*((v-mu)/sigma)**2);
+
+  // Draw
+  const {ctx, W, H} = setupCanvas('norm-canvas');
+  ctx.clearRect(0,0,W,H);
+
+  const xMin = mu-4*sigma, xMax = mu+4*sigma;
+  const toX = v => (v-xMin)/(xMax-xMin)*W;
+  const maxPDF = pdf(mu);
+  const toY = v => H - v/maxPDF*(H-8) - 4;
+
+  // Fill ±1σ, ±2σ, ±3σ
+  const bands = [
+    {lo:mu-sigma,hi:mu+sigma, c:'rgba(78,240,255,0.12)'},
+    {lo:mu-2*sigma,hi:mu+2*sigma, c:'rgba(78,240,255,0.07)'},
+    {lo:mu-3*sigma,hi:mu+3*sigma, c:'rgba(78,240,255,0.04)'},
+  ];
+  bands.forEach(({lo,hi,c})=>{
+    ctx.fillStyle=c; ctx.beginPath();
+    ctx.moveTo(toX(lo),H);
+    for(let px=0;px<W;px++){
+      const v=xMin+(px/W)*(xMax-xMin);
+      if(v>=lo&&v<=hi) ctx.lineTo(px, toY(pdf(v)));
+    }
+    ctx.lineTo(toX(hi),H); ctx.closePath(); ctx.fill();
+  });
+
+  // Curve
+  ctx.beginPath(); ctx.strokeStyle='rgba(78,240,255,0.9)'; ctx.lineWidth=1.5;
+  for(let px=0;px<W;px++){
+    const v=xMin+(px/W)*(xMax-xMin);
+    px===0?ctx.moveTo(px,toY(pdf(v))):ctx.lineTo(px,toY(pdf(v)));
+  }
+  ctx.stroke();
+
+  // x marker
+  ctx.strokeStyle='rgba(255,201,78,0.8)'; ctx.lineWidth=1; ctx.setLineDash([3,4]);
+  ctx.beginPath(); ctx.moveTo(toX(x),0); ctx.lineTo(toX(x),H); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // erf for CDF
+  function erf(z){
+    const t=1/(1+0.3275911*Math.abs(z));
+    const p=1-t*(0.254829592+t*(-0.284496736+t*(1.421413741+t*(-1.453152027+t*1.061405429))))*Math.exp(-z*z);
+    return z<0?-p:p;
+  }
+  const cdf = v => 0.5*(1+erf((v-mu)/(sigma*Math.sqrt(2))));
+  const pctile = (cdf(x)*100).toFixed(2);
+  const zscore = ((x-mu)/sigma).toFixed(3);
+
+  pop('norm-result', `
+    <span class="r-big">PDF(${x}) = ${pdf(x).toFixed(6)}</span>
+    <span class="r-eq">z-score = (${x}−${mu})/σ = <span class="r-sky">${zscore}</span></span>
+    <span class="r-step">P(X ≤ ${x}) = ${pctile}th percentile</span>
+    <span class="r-step">±1σ contains 68.27% · ±2σ contains 95.45% · ±3σ contains 99.73%</span>
+    <span class="r-note">Central Limit Theorem: add n independent random variables. For large enough n, the sum is normal — regardless of what each variable's distribution looks like.</span>
+    ${hm(45, 'Disturbingly Universal')}
+  `);
+}
+
+// ⑨ MANDELBROT
+function doMandelbrot() {
+  const re = parseFloat(document.getElementById('mb-re').value)||-.7;
+  const im = parseFloat(document.getElementById('mb-im').value)||.27;
+  const maxN = parseInt(document.getElementById('mb-n').value)||200;
+
+  let zr=0, zi=0, n=0, escaped=false;
+  const orbit = [[0,0]];
+  for(;n<maxN;n++){
+    const zr2=zr*zr, zi2=zi*zi;
+    if(zr2+zi2>4){escaped=true;break;}
+    zi=2*zr*zi+im; zr=zr2-zi2+re;
+    orbit.push([zr,zi]);
+    if(orbit.length>80) break;
+  }
+
+  const zm = Math.sqrt(zr*zr+zi*zi);
+  const smooth = escaped && zm>0 ? (n+1-Math.log2(Math.log2(zm))).toFixed(4) : '—';
+
+  // angle at escape
+  const angle = Math.atan2(zi,zr)*180/PI;
+
+  pop('mb-result', `
+    <span class="r-big">${escaped?`Escaped at n = ${n}`:n>=maxN?'IN THE SET (did not escape)':'Stopped early'}</span>
+    <span class="r-eq">c = ${re} + ${im}i · |z| at escape = ${zm.toFixed(6)}</span>
+    <span class="r-step">Smooth iteration count: <span class="r-sky">${smooth}</span> (used for colouring)</span>
+    <span class="r-step">Orbit length tracked: ${orbit.length} steps</span>
+    <span class="r-step">Final z = ${zr.toFixed(6)} + ${zi.toFixed(6)}i · arg = ${angle.toFixed(2)}°</span>
+    <span class="r-note">The set boundary has Hausdorff dimension 2 — it's so infinitely detailed it fills 2D space. The set itself has area ~1.506 but infinite perimeter.</span>
+    ${hm(escaped?(n<10?20:n<50?55:75):95, escaped?(n<10?'Escaped Quickly':'Lingered at Boundary'):'In the Set ∞')}
+  `);
+}
+
+// ⑩ BEER-LAMBERT
+function doBeerLambert() {
+  const eps = parseFloat(document.getElementById('bl-eps').value)||1000;
+  const c   = parseFloat(document.getElementById('bl-c').value)*1e-3||5e-4; // mol/L
+  const l   = parseFloat(document.getElementById('bl-l').value)||1;
+
+  const A = eps * c * l;
+  const T = Math.pow(10, -A);
+  const pctAbsorbed = (1-T)*100;
+
+  // spectrum-like bar
+  const colours = ['#ff4444','#ff8800','#ffff00','#00cc00','#0044ff','#8800cc'];
+
+  pop('bl-result', `
+    <span class="r-big">Absorbance A = ${A.toFixed(4)}</span>
+    <span class="r-eq">T = 10^(−${A.toFixed(4)}) = <span class="r-gold">${(T*100).toFixed(3)}%</span> transmitted</span>
+    <span class="r-step"><span class="${pctAbsorbed>99?'r-rose':pctAbsorbed>90?'r-gold':'r-good'}">${pctAbsorbed.toFixed(3)}%</span> of light absorbed</span>
+    <span class="r-step">ε=${eps.toLocaleString()} L·mol⁻¹·cm⁻¹ · c=${(c*1000).toFixed(3)} mmol/L · l=${l} cm</span>
+    <span class="r-step">Doubling concentration → A doubles → T squares → ${((Math.pow(10,-2*A))*100).toFixed(3)}% transmitted</span>
+    <span class="r-note">A>2 means 99% absorbed. A>3 means 99.9%. Spectrophotometers typically measure 0.1≤A≤1.5 reliably — outside that, the detector struggles.</span>
+    ${hm(Math.min(95, A*30+10), A>3?'Essentially Opaque':A>1?'Heavily Absorbing':'Measurable')}
+  `);
+}
+
+// ── Auto-init ──
+window.addEventListener('load', ()=>{
+  doLogistic();
+  doWave();
+  doBoltzmann();
+  doSnell();
+  doCoulomb();
+  doStirling();
+  doGWave();
+  doNormal();
+  doMandelbrot();
+  doBeerLambert();
+});
+
+// Enter key
+document.querySelectorAll('input[type=number],input[type=text]').forEach(inp=>{
+  inp.addEventListener('keydown', e=>{
+    if(e.key==='Enter'){
+      const btn=inp.closest('.card').querySelector('.btn');
+      if(btn) btn.click();
+    }
+  });
+});
+
+// Live sliders
+document.getElementById('log-r').addEventListener('input', doLogistic);
+document.getElementById('wav-f1').addEventListener('input', doWave);
+document.getElementById('wav-f2').addEventListener('input', doWave);
+document.getElementById('sn-θ').addEventListener('input', doSnell);
+document.getElementById('sn-m1').addEventListener('change', doSnell);
+document.getElementById('sn-m2').addEventListener('change', doSnell);
+document.getElementById('stir-n').addEventListener('input', doStirling);
+document.getElementById('norm-σ').addEventListener('input', doNormal);
+</script>
+</body>
+</html>
